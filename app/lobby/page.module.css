@@ -1,0 +1,285 @@
+.shell {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 600px at 70% -10%, rgba(255, 99, 82, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(99, 132, 255, 0.10), transparent 55%),
+    #0c0c0e;
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(20, 20, 24, 0.72);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.55);
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brandRow img {
+  height: 28px;
+  width: auto;
+}
+
+.kicker {
+  display: inline-block;
+  margin-left: auto;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: rgba(255, 99, 82, 0.12);
+  color: #ff8b7d;
+  border: 1px solid rgba(255, 99, 82, 0.35);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  margin: -0.5rem 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.input {
+  flex: 1;
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.95rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.6rem;
+  outline: none;
+  transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+.input:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.input:focus {
+  border-color: rgba(255, 99, 82, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(255, 99, 82, 0.18);
+}
+
+.inputMono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  letter-spacing: -0.01em;
+  padding-right: 3rem;
+}
+
+.inputCustomized {
+  border-color: rgba(255, 196, 0, 0.45);
+  box-shadow: 0 0 0 3px rgba(255, 196, 0, 0.08);
+}
+
+.regenButton {
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, transform 200ms ease;
+}
+
+.regenButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.regenButton:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.regenButton svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.help {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.error {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  color: #ffb8af;
+  background: rgba(255, 99, 82, 0.1);
+  border: 1px solid rgba(255, 99, 82, 0.35);
+  border-radius: 0.6rem;
+  white-space: pre-wrap;
+}
+
+.joinButton {
+  margin-top: 0.25rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(180deg, #ff7866 0%, #ff5040 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+  box-shadow: 0 8px 18px -8px rgba(255, 99, 82, 0.6);
+}
+
+.joinButton:hover:not(:disabled) {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 22px -10px rgba(255, 99, 82, 0.7);
+}
+
+.joinButton:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.joinButton:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.6) brightness(0.85);
+  box-shadow: none;
+}
+
+.spinner {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-right: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+  vertical-align: -2px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.configSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.configSummary::-webkit-details-marker {
+  display: none;
+}
+
+.configSummary svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  transition: transform 160ms ease;
+}
+
+.config[open] .configSummary svg {
+  transform: rotate(90deg);
+}
+
+.configBadge {
+  margin-left: auto;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 196, 0, 0.85);
+  border: 1px solid rgba(255, 196, 0, 0.35);
+  border-radius: 999px;
+}
+
+.resetLink {
+  align-self: flex-start;
+  margin-top: 0.1rem;
+  padding: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 99, 82, 0.85);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 99, 82, 0.35);
+  text-underline-offset: 0.18em;
+}
+
+.resetLink:hover {
+  color: #ff8b7d;
+}

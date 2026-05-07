@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Static export so the app deploys as plain HTML+JS with no Node runtime.
+  // Token signing is delegated to the WebClientApi (called from the lobby
+  // in the browser) so we no longer need any server-side handlers.
+  output: 'export',
+  // Emit each route as `<route>/index.html` instead of `<route>.html`, so any
+  // static host (IIS, Nginx, plain file server) serves /lobby/, /custom/, etc.
+  // without needing extension rewrites.
+  trailingSlash: true,
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
   images: {
