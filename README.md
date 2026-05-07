@@ -24,8 +24,9 @@ The only deviations from upstream:
 | Path | Status | Why |
 |---|---|---|
 | `app/lobby/` | **Added** | Custom lobby page that fetches a JWT from the WebClientApi (`/api/v10.2/meeting/getAnonymousMediaServerToken`) and forwards to the upstream `/custom/` route. URLs default to the page's host (`<origin>/XPhoneConnect/...`) and are user-overridable in the lobby UI. |
-| `next.config.js` | **+2 lines** | `output: 'export'` and `trailingSlash: true` — turn the app into a pure-static deploy. |
+| `next.config.js` | **+3 lines** | `output: 'export'`, `trailingSlash: true`, and `basePath` driven by `NEXT_PUBLIC_BASE_PATH` env var — turn the app into a pure-static deploy that can target a sub-path (e.g. an IIS sub-application). |
 | `app/custom/page.tsx` | **Modified** | Async server component (`await searchParams`) converted to a client component using `useSearchParams` + `<Suspense>`. Behaviour identical; required by `output: 'export'`. |
+| `app/layout.tsx` | **+1 helper, 3 lines edited** | Prefix `metadata.icons` URLs with `basePath` so favicon / apple-touch / safari mask icons resolve when deployed under a sub-path. Next does not auto-prefix metadata URLs. |
 | `package.json` | **build script** | Appends `&& node scripts/post-build-redirect.mjs` so `/` → `/lobby/` after build. |
 | `app/api/`, `app/rooms/`, `middleware.ts` | **Deleted** | Token-signing API routes, the dynamic `/rooms/[roomName]` route that consumes them, and our former `/` rewrite middleware. All incompatible with static export and unused by our flow (the WebClientApi signs the JWT instead of `/api/connection-details`). |
 | `scripts/post-build-redirect.mjs` | **Added** | Writes a meta-refresh redirect into `out/index.html` so the deploy root lands on `/lobby/`. |
@@ -67,6 +68,30 @@ pnpm install
 pnpm build      # runs `next build` then writes the / -> /lobby/ redirect
 ```
 
+That builds for a **root deployment** (`<host>/`). For a
+**sub-path deployment** (e.g. an IIS sub-application at
+`<host>/XPhoneConnect/demo-meeting/`), set `NEXT_PUBLIC_BASE_PATH`
+before building so every emitted asset URL is correctly prefixed:
+
+```powershell
+# PowerShell
+$env:NEXT_PUBLIC_BASE_PATH = '/XPhoneConnect/demo-meeting'
+pnpm build
+```
+
+```sh
+# bash
+NEXT_PUBLIC_BASE_PATH=/XPhoneConnect/demo-meeting pnpm build
+```
+
+**One build per target sub-path.** The basePath is baked into
+every emitted HTML, JS chunk, and RSC payload, so you cannot
+move a built `out/` to a different sub-path without rebuilding.
+This is a Next.js static-export limitation combined with how IIS
+sub-applications resolve absolute URLs — the deployed asset URLs
+must match the IIS application path exactly. If you host the same
+app at multiple sub-paths, build once per sub-path.
+
 Deploy the contents of `out/` to any static host (IIS, Nginx,
 served from the WebClientApi as static content, etc.).
 
@@ -80,6 +105,34 @@ out/
 ```
 
 No Node.js process needs to run on the target.
+
+### Testing the build locally
+
+Serve `out/` with any static file server. The quickest is `serve`
+via `pnpm dlx`:
+
+```sh
+pnpm dlx serve out -l 3201
+```
+
+Then open <http://localhost:3201/> — you should be redirected to
+`/lobby/`. **Port 3000 is unusable on most Windows dev machines
+(reserved by the Hyper-V dynamic port range), so pick something
+outside `2966–3065` such as 3201.**
+
+Other equivalent options:
+
+```sh
+pnpm dlx http-server out -p 3201
+# or, from inside out/:
+python -m http.server 3201
+```
+
+When testing locally against a real backend, open the lobby's
+**Server configuration** panel and override the LiveKit /
+WebClientApi URLs to point at the actual deployment — the
+defaults derive from `localhost:3201` and won't resolve.
+Overrides persist in `localStorage`, so you set them once.
 
 ## Runtime requirements (server side)
 

@@ -21,6 +21,10 @@ const STORAGE_USER_ID = 'meet:userId';
 const STORAGE_LIVEKIT_URL = 'meet:livekitUrl';
 const STORAGE_WEBCLIENT_BASE = 'meet:webclientApiBase';
 
+// Next exposes the configured `basePath` as NEXT_PUBLIC_BASE_PATH so we can
+// build correct URLs to public/ assets (Next does not transform raw <img src>).
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 function defaultLiveKitUrl(): string {
   if (typeof window === 'undefined') return '';
   const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -130,7 +134,7 @@ export default function LobbyPage() {
     <main data-lk-theme="default" className={styles.shell}>
       <div className={styles.card}>
         <div className={styles.brandRow}>
-          <img src="/images/livekit-meet-home.svg" alt="LiveKit Meet" />
+          <img src={`${BASE_PATH}/images/livekit-meet-home.svg`} alt="LiveKit Meet" />
           <span className={styles.kicker}>Lobby</span>
         </div>
 
