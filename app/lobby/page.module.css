@@ -1,10 +1,16 @@
 .shell {
   position: relative;
-  min-height: 100vh;
+  /* Globals set html,body { overflow: hidden; height: 100% }, so the page
+     itself never scrolls. Fill that height and own the scroll here, and
+     use `safe center` so a card taller than the viewport aligns to the
+     top instead of getting its top clipped. */
+  height: 100%;
+  min-height: 100%;
   display: grid;
-  place-items: center;
+  place-items: safe center;
   padding: 2rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background:
     radial-gradient(1200px 600px at 70% -10%, rgba(255, 99, 82, 0.12), transparent 60%),
     radial-gradient(900px 500px at 0% 110%, rgba(99, 132, 255, 0.10), transparent 55%),

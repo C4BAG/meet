@@ -86,9 +86,13 @@ export default function LobbyPage() {
       return;
     }
 
+    // String-concatenate the API path onto the base. Do NOT use
+    // `new URL('/api/...', base)` — when the first arg starts with "/", the
+    // URL constructor replaces the base's entire path, dropping any
+    // sub-path the user configured (e.g. /WebClientApi or /XPhoneConnect/WebClientApi).
     let tokenUrl: URL;
     try {
-      tokenUrl = new URL('/api/v10.2/meeting/getAnonymousMediaServerToken', trimmedWebclient + '/');
+      tokenUrl = new URL(`${trimmedWebclient}/api/v10.2/meeting/getAnonymousMediaServerToken`);
     } catch {
       setError('WebClientApi base URL is not a valid URL');
       setBusy(false);
